@@ -1,3 +1,19 @@
+<p align="center">
+  <a href="https://deepliquidity.fun"><img src="./assets/deep-og.png" alt="DEEP — Launch deeper." width="100%" /></a>
+</p>
+
+<h3 align="center">The Jupiter AMM adapter for DeepSwap, the DEX of the DEEP launchpad on Solana.</h3>
+
+<p align="center">
+  <a href="https://deepliquidity.fun"><img alt="App" src="https://img.shields.io/badge/App-mainnet-00F0FF?style=for-the-badge&labelColor=0E141A" /></a>
+  <a href="https://github.com/Deep-Liquidity/deep-sdk"><img alt="SDK" src="https://img.shields.io/badge/SDK-TypeScript-AEC6FF?style=for-the-badge&labelColor=0E141A" /></a>
+  <a href="https://api.deepliquidity.fun/v1/openapi.json"><img alt="API" src="https://img.shields.io/badge/API-OpenAPI%203.1-34F6A8?style=for-the-badge&labelColor=0E141A" /></a>
+  <a href="https://x.com/LaunchOnDL"><img alt="X @LaunchOnDL" src="https://img.shields.io/badge/X-%40LaunchOnDL-DDE3EC?style=for-the-badge&logo=x&logoColor=white&labelColor=0E141A" /></a>
+  <a href="https://t.me/LaunchOnDL"><img alt="Telegram @LaunchOnDL" src="https://img.shields.io/badge/Telegram-%40LaunchOnDL-34F6A8?style=for-the-badge&logo=telegram&logoColor=white&labelColor=0E141A" /></a>
+</p>
+
+---
+
 # deepswap-jupiter
 
 Jupiter AMM adapter (`jupiter_amm_interface::Amm`) for **DeepSwap**, the constant-product
@@ -260,3 +276,7 @@ past 3.2.0. LiteSVM 0.14 needs wincode 0.5.5, and `Cargo.lock` holds them at 3.1
 Apache-2.0 (see `LICENSE`). See `NOTICE`, which credits Raydium cp-swap, whose math and
 layouts are ported here, and states which parts (the V1 fee model) are ported from DEEP's
 own code instead.
+
+## Links
+
+[Website and app](https://deepliquidity.fun) · [Docs](https://docs.deepliquidity.fun/docs) · [SDK](https://github.com/Deep-Liquidity/deep-sdk) · [Blog](https://blog.deepliquidity.fun) · [Status](https://status.deepliquidity.fun) · [X](https://x.com/LaunchOnDL) · [Telegram](https://t.me/LaunchOnDL)
