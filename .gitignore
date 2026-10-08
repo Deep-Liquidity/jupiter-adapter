@@ -1,0 +1,4 @@
+target/
+.env*
+*-keypair.json
+*.keypair.json

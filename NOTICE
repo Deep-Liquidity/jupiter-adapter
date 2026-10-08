@@ -1,0 +1,46 @@
+deepswap-jupiter (Jupiter AMM adapter for DeepSwap)
+Copyright the DEEP project contributors. Licensed under the Apache License, Version 2.0
+(see LICENSE).
+
+This crate contains a port of the swap math and account layouts of raydium-cp-swap
+  https://github.com/raydium-io/raydium-cp-swap
+  commit b3187ae53a1b95a201f855a59024a12ca8f5b51a, directory programs/cp-swap
+Copyright Raydium contributors, licensed under the Apache License, Version 2.0.
+DeepSwap's on-chain program (programs/deep-amm in the DEEP repository) is a fork of that
+code; see programs/deep-amm/NOTICE there for its list of modifications.
+
+Ported here (re-implemented as standalone, dependency-free Rust; no upstream file is
+copied verbatim):
+  - src/math.rs   <- programs/cp-swap/src/curve/{fees.rs, constant_product.rs,
+                     calculator.rs} (CurveCalculator::swap_base_input and helpers).
+                     Changes: places where upstream unwraps/panics return None instead.
+  - src/state.rs  <- byte offsets of PoolState (states/pool.rs) and AmmConfig
+                     (states/config.rs); PoolState::{vault_amount_without_fee,
+                     is_creator_fee_on_input, adjust_creator_fee_rate, get_status_by_bit}.
+  - src/lib.rs    <- the checks and account order of instructions/swap_base_input.rs.
+
+Not from upstream: the DEEP V1 fee model (side-dependent fees taken in the pool's quote
+token). It is DEEP's own work, Copyright the DEEP project contributors, Apache-2.0, and is
+ported here from the DEEP repository, not from raydium-cp-swap:
+  - src/math.rs   <- programs/deep-amm/src/curve/v1.rs (MAX_TOTAL_FEE_RATE, the 10%
+                     cap on a side's total, and MAX_REWARD_RATE, the 5% ceiling of a
+                     pool's reward rate; FeeParts,
+                     total_rate, fee_on, gross_up, split_fee, swap_base_input_v1,
+                     swap_base_output_v1), line for line. The legacy functions above it in
+                     the same file are unchanged.
+  - src/state.rs  <- the V1 fields and their byte offsets in PoolState (fee_model,
+                     reward_model, and reward_rate_snapshot, the pool's own reward rate;
+                     states/pool.rs) and AmmConfig (fee_model, the four LP / protocol
+                     rates and max_reward_rate, which limits new pools only and is
+                     never used for a quote; states/config.rs), V1Rates,
+                     PoolState::v1_rates, and swap_fee_model
+                     (instructions/swap_base_input.rs).
+  - src/lib.rs    <- the V1 branch of instructions/swap_base_input.rs and
+                     PoolState::update_fees_v1 (states/pool.rs).
+  - tests/v1_vectors.rs reads tests/fixtures/deepswap-v1-vectors.json (generated from DEEP's
+    curve-math package), shared with the on-chain program's tests.
+
+Dependencies (not vendored): jupiter-amm-interface, and as a dev-dependency
+jupiter-amm-test-kit, both by Jupiter (https://github.com/jup-ag/jupiter-amm-interface),
+Apache-2.0. tests/fixtures/ holds public devnet account data and the deployed deep-amm
+program binary, snapshotted with that test kit.

@@ -1,0 +1,29 @@
+[package]
+name = "deepswap-jupiter"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85.0"
+license = "Apache-2.0"
+description = "Jupiter AMM interface adapter for DeepSwap (deep-amm), a fork of Raydium cp-swap"
+publish = false
+
+[workspace]
+
+[dependencies]
+# The trait as of jup-ag/jupiter-amm-interface@95bd184 (AccountProvider / AmmError /
+# Swap::Placeholder). crates.io's 0.6.1 is the older anyhow/AccountMap API without
+# Swap::Placeholder, so the interface is taken from git at the same pinned commit as the
+# test kit (both must resolve to the same package for the trait to unify).
+jupiter-amm-interface = { git = "https://github.com/jup-ag/jupiter-amm-interface", rev = "95bd18485e580625a39eb92a0c0ad2061579daad" }
+rust_decimal = "1.36"
+solana-account = "4"
+solana-instruction = "3.1"
+solana-pubkey = { version = "4", features = ["curve25519"] }
+thiserror = "2"
+
+[dev-dependencies]
+jupiter-amm-test-kit = { git = "https://github.com/jup-ag/jupiter-amm-interface", rev = "95bd18485e580625a39eb92a0c0ad2061579daad" }
+# tests/v1_vectors.rs reads the cross-language vectors (tests/fixtures/deepswap-v1-vectors.json)
+serde_json = "1"
+sha2 = "0.10"
+solana-clock = "3.1"
